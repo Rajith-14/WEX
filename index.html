@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .button-container {
+            margin: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            width: 250px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Bus Management System</h1>
+    
+    <div class="button-container">
+        <a href="driverLogin.html">
+            <button>Driver Login</button>
+        </a>
+        <a href="login.html">
+            <button>Admin Login</button>
+        </a>
+    </div>
+
+    <div class="search-container">
+        <h2>Search Bus</h2>
+        <form action="/search-bus" method="GET">
+            <input type="text" name="search" placeholder="Enter Service No or Bus No" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</body>
+</html>
