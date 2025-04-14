@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Results</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <style>
+    #map { height: 500px; width: 100%; }
+  </style>
+</head>
+<body>
+  <% const safeMessage = typeof message !== 'undefined' ? message : null; %>
+  <% const safeBusesWithLocation = typeof busesWithLocation !== 'undefined' ? busesWithLocation : []; %>
+  
+  <h1>Search Results</h1>
+  
+  <% if (safeMessage) { %>
+    <p><%= safeMessage %></p>
+  <% } %>
+  
+  <% if (safeBusesWithLocation.length > 0) { %>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Bus No</th>
+          <th>Service No</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Via</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% safeBusesWithLocation.forEach(item => { %>
+          <tr>
+            <td><%= item.bus.busNo %></td>
+            <td><%= item.bus.serviceNo %></td>
+            <td><%= item.bus.from %></td>
+            <td><%= item.bus.to %></td>
+            <td><%= item.bus.via %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+
+    <!-- MAPS SECTION START -->
+    <% safeBusesWithLocation.forEach((item, index) => { %>
+      <% if (item.latitude && item.longitude) { %>
+        <!-- Inside the if statement, rendering the map -->
+        <div id="map-<%= index %>" style="height: 400px; width: 100%; margin-bottom: 30px;"></div>
+        
+        <script>
+          const lat<%= index %> = <%= JSON.stringify(item.latitude) %>;
+          const lng<%= index %> = <%= JSON.stringify(item.longitude) %>;
+  
+          const map<%= index %> = L.map("map-<%= index %>").setView([lat<%= index %>, lng<%= index %>], 15);
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: "© OpenStreetMap contributors"
+          }).addTo(map<%= index %>);
+  
+          const busIcon = L.icon({
+            iconUrl: "https://cdn-icons-png.flaticon.com/512/61/61223.png",
+            iconSize: [40, 40],
+            iconAnchor: [20, 40]
+          });
+  
+          L.marker([lat<%= index %>, lng<%= index %>], { icon: busIcon })
+            .addTo(map<%= index %>)
+            .bindPopup("Bus #: <%= item.bus.busNo %>")
+            .openPopup();
+        </script>
+      <% } else { %>
+        <p>Location not available for this bus.</p>
+      <% } %>
+    <% }) %>
+    
+  <% } else { %>
+    <p>No buses found.</p>
+  <% } %>
+  
+  <a href="/">Back to Home</a>
+  
+</body>
+</html>
