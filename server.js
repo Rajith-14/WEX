@@ -10,7 +10,7 @@ const app = express();
 // Assuming busNumber is passed as a parameter
 
 // MongoDB connection
-mongoose.connect("mongodb+srv://doodlebook014:Rajith014@cluster0.nnx3azi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
+mongoose.connect("", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => console.log("MongoDB connected"))
